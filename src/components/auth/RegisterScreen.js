@@ -19,7 +19,7 @@ export const RegisterScreen = () => {
   const { name, email, password, password2 } = values;
 
   const dispatch = useDispatch();
-  const { msgError } = useSelector((state) => state.ui);
+  const { msgError, loading } = useSelector((state) => state.ui);
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -91,7 +91,7 @@ export const RegisterScreen = () => {
           onChange={handleInputChange}
         />
 
-        <button className="mb-5 btn btn-primary btn-block" type="submit">
+        <button className="mb-5 btn btn-primary btn-block" type="submit" disabled={loading}>
           Register
         </button>
 

@@ -1,28 +1,48 @@
+import Swal from "sweetalert2";
+
+
 import { types } from "../types/types";
 import { firebase, googleAuthProvider } from "../firebase/firebaseConfig";
-import { removeError, setError } from "./ui";
+import { removeLoading, setLoading } from "./ui";
+
 
 export const startLoginWithEmailPassword = (email, password) => {
   return (dispatch) => {
-    setTimeout(() => {
-      dispatch(login(123, "Matias"));
-    }, 2500);
+    dispatch(setLoading());
+
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((e) => {
+        Swal.fire("Error", e.message, "error");
+        // dispatch(setError(e.message));
+      })
+      .then(() => dispatch(removeLoading()));
   };
 };
 
 export const startRegisterWithEmailPasswordName = (email, password, name) => {
   return (dispatch) => {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    dispatch(setLoading());
+
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
 
       .then(async ({ user }) => {
         await user.updateProfile({ displayName: name });
 
-        // dispatch(removeError())
         dispatch(login(user.uid, user.displayName));
+        await dispatch(removeLoading());
       })
 
       .catch((e) => {
-        dispatch( setError(e.message) )
+        // dispatch(setError(e.message));
+        dispatch(removeLoading());
+        Swal.fire('Error', e.message, 'error')
       });
   };
 };
@@ -45,3 +65,17 @@ export const login = (uid, displayName) => ({
     displayName,
   },
 });
+
+export const startLogout = () => {
+  return async(dispatch) => {
+    await firebase.auth().signOut();
+
+    dispatch( logout() );
+  };
+};
+
+export const logout = () => {
+  return ({
+    type: types.logout,
+  })
+}

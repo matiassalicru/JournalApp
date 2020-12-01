@@ -12,3 +12,17 @@ export const removeError = () => {
         type: types.uiRemoveError,
     })
 }
+
+export const setLoading = () => {
+    return ({
+        type: types.uiSetLoading,
+        payload: true,
+    })
+}
+
+export const removeLoading = () => {
+    return ({
+        type: types.uiRemoveLoading,
+        payload: false,
+    })
+}

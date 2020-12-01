@@ -6,7 +6,6 @@ const initialState = {
 };
 
 export const uiReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case types.uiSetError:
       return {
@@ -20,6 +19,18 @@ export const uiReducer = (state = initialState, action) => {
         msgError: null,
       };
 
+    case types.uiSetLoading:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+
+    case types.uiRemoveLoading:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+      
     default:
       return state;
   }
