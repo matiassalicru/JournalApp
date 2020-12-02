@@ -53,7 +53,10 @@ export const LoginScreen = () => {
 
       {msgError && <div className="auth__alert-error">{msgError}</div>}
 
-      <form onSubmit={handleLogin}>
+      <form
+        onSubmit={handleLogin}
+        className="animate__animated animate__fadeIn animate__faster"
+      >
         <input
           className="auth__input"
           autoComplete="off"
