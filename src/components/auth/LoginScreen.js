@@ -17,8 +17,8 @@ export const LoginScreen = () => {
   const { msgError } = useSelector((state) => state.ui);
 
   const initialForm = {
-    email: "matt@gmail.com",
-    password: "123456",
+    email: "",
+    password: "",
   };
 
   const [formValues, handleInputChange] = useForm(initialForm); //Deben ser importados de forma desestructurada con el mismo orden en que fueron exportados.
